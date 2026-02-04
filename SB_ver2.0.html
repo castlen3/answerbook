@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <title>答案之書</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #1d1a1a;
+      font-family: "微軟正黑體", sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 3vh;
+      color: #fff;
+    }
+
+    #bookContainer {
+      position: relative;
+      width: 90vw;
+      height: 60vh;
+      perspective: 1200px;
+      margin-top: 2vh;
+    }
+
+    #book {
+      width: 100%;
+      height: 100%;
+      background: #4e342e;
+      border: 5px solid #8d6e63;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+      color: gold;
+      font-size: 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 1s ease-in-out, background 0.5s, color 0.5s;
+      transform-origin: left;
+      backface-visibility: hidden;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    #book.opening {
+      transform: rotateY(-160deg);
+    }
+
+    #book.opened {
+      transform: rotateY(-160deg);
+      background: #f9f4e5;
+      color: #000;
+    }
+
+    #answer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 8% 5%;
+      box-sizing: border-box;
+      font-size: 4.5vw;
+      color: #000;
+      background-color: #f9f4e5;
+      display: none;
+      z-index: 1;
+      border-radius: 10px;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      overflow: auto;
+    }
+
+    #book.opened+#answer {
+      display: block;
+    }
+
+    #answer>div {
+      width: 100%;
+      padding: 5%;
+      box-sizing: border-box;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      line-height: 1.5;
+    }
+
+    #prompt {
+      margin-top: 3vh;
+      font-size: 4vw;
+      color: #ccc;
+    }
+
+    button {
+      margin-top: 2vh;
+      font-size: 5vw;
+      padding: 10px 30px;
+      background-color: #fdd835;
+      color: #3e2723;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #fbc02d;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 0 rgba(255, 255, 153, 0.0);
+      }
+
+      50% {
+        box-shadow: 0 0 80px 40px rgba(255, 255, 153, 0.6);
+      }
+
+      100% {
+        box-shadow: 0 0 0 rgba(255, 255, 153, 0.0);
+      }
+    }
+
+    #book.glow {
+      animation: glow 1.5s ease-out;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1 style="font-size: 6vw;">📖 答案之書</h1>
+  <div id="bookContainer">
+    <div id="book">答案之書</div>
+    <div id="answer">
+      <div></div>
+    </div>
+  </div>
+
+  <div id="prompt">想好你要問的問題，我會給你答案</div>
+  <button id="flipButton" onclick="revealAnswer()">翻開</button>
+
+  <script>
+    const answers = [ // 100個沙雕答案 + 驚喜答案
+      "最好是多了解。", "明天再看看。", "介於是與不是之間。", "答案藏在你心裡。", "先吃飯，再想。",
+      "這問題太深奧了。", "就...隨便吧。", "聽天由命，躺平有理。", "有可能，也有不可能。", "等等再問會不會比較好？",
+      "選擇障礙已啟動。", "問這種問題...我也很難。", "命運在跳針中。", "請轉身三圈再問一次。", "依照月亮的心情決定。",
+      "可以，但不建議。", "感覺像是，也可能不是。", "如果你堅持，那就當然不行。", "這答案今天休假。", "走一步算一步。",
+      "你需要一杯奶茶冷靜一下。", "現在知道未來，會不會太早？", "已送出申請，靜候宇宙回覆。", "再問下去會被宇宙封鎖喔。", "這答案要收費，請先課金。",
+      "這問題...有點沙雕喔。", "我猜你會後悔知道答案。", "答案太危險，已被銷毀。", "請自行 Google。", "比起答案，也許你更需要抱抱。",
+      "喵？（貓咪路過）", "先去鏟貓砂再來問。", "系統過熱，請稍後。", "我的水晶球正在更新韌體。", "問問神奇海螺吧！",
+      "你確定要問這個？", "今天水逆，不宜占卜。", "答案在風中，可惜今天沒風。", "不如去睡覺，夢裡什麼都有。", "這個問題，讓我想想...算了不值得想。",
+      "你猜啊！猜對了...也沒獎勵。", "42。(但這是另一個問題的答案)", "關我P事？", "你是不是想太多了？", "答案正在Loading...99%...卡住了。",
+      "擲個硬幣吧，正面就...反面就...", "我覺得你只是想找人聊天。", "這個嘛...很難評。", "下一位！", "此答案已過期，請洽詢客服。",
+      "可能需要一點魔法。", "嗶嗶！偵測到問題過於抽象。", "我只是一個網頁，別為難我。", "喝口水，壓壓驚。", "答案售罄，明日請早。",
+      "那是肯定的", // 驚喜答案！
+      "你人好好，但答案我不知道。", "去問隔壁老王看看。", "這個問題的複雜度超出了我的薪水。", "我的AI累了，想下班。", "答案被外星人劫走了。",
+      "你是不是忘了開勿擾模式？", "這個問題，它...它自己走掉了！", "讓我算一下...嗯...大概是那樣吧。", "佛曰：不可說，不可說。", "要不要試試看反過來問？",
+      "今天的風兒有點喧囂。", "答案在鹹酥雞的袋子裡。", "請保持社交距離，謝謝。", "你是不是想騙我唱歌？", "這個問題好無聊，下一個！",
+      "CPU表示：我不想處理這個。", "記憶體不足，無法回答。", "答案正在煮，請耐心等候。", "不然你給我一個答案？", "先去洗把臉清醒一下。",
+      "你是不是偷偷熬夜了？", "這個問題，我選擇放棄。", "要不要點播一首歌？", "答案可能在你的宵夜裡。", "今天的 KPI 還沒達標，沒空回答。",
+      "再吵，就把你丟到資源回收桶！", "這個問題太哲學了，我頭痛。", "我覺得你需要的是假期，不是答案。", "去公園跑三圈，答案就浮現了。", "不然...我們來玩剪刀石頭布？",
+      "這個問題太難了，我選擇被格式化。", "別問了，再問就是愛過。", "答案正在放空，勿擾。", "請充值信仰獲得解答。", "你是不是想測試我的智商？不高，謝謝。",
+      "答案在海底撈，自己去撈。", "我的能量條快耗盡了。", "嗶啵嗶啵...訊號不良...", "這問題太油了，我先去去油。", "你是不是想對我做什麼？",
+      "答案正在環遊世界，歸期未定。", "問天問地問自己，就是別問我。", "今天的心情是薛丁格的貓。", "這個問題太水了，我拒答。", "請查詢FAQ，如果沒有就沒有。",
+      "看起來不太妙喔。", "你的直覺是對的。", "再等等吧，時機未到。", "這個嘛...一言難盡。", "你想聽真話還是假話？",
+      "答案在你的錢包裡。", "先去運動一下再說。", "這需要三思而後行。", "隨緣吧，強求不來。", "你已經知道答案了，不是嗎？",
+      "這個問題有毒。", "建議你找專業人士。", "答案正在趕來的路上。", "可能性：50/50。", "不要問，很恐怖。",
+      "你的問題讓我陷入沉思。", "這個...要看你的造化。", "答案藏在細節裡。", "先把手機放下。", "你確定要繼續問嗎？",
+      "這答案需要VIP才能解鎖。", "系統偵測到你在糾結。", "不如去吃個火鍋冷靜一下。", "答案比你想的還複雜。", "這個問題，我給滿分。",
+      "請在心中默念三遍再問。", "答案正在編譯中...", "你是不是該去睡了？", "這個嘛...看天意吧。", "答案已讀不回。"
+    ];
+
+    let isOpen = false;
+    let hasOpenedBefore = false;
+    let audioCtx;
+
+    function revealAnswer() {
+      const book = document.getElementById("book");
+      const answerBoxInner = document.getElementById("answer").querySelector("div");
+      const flipButton = document.getElementById("flipButton");
+
+      if (isOpen) {
+        book.classList.remove("opened", "opening", "glow");
+        answerBoxInner.innerText = "";
+        isOpen = false;
+        setTimeout(() => {
+          showAnswer(book, answerBoxInner, flipButton);
+        }, 800); // 等待書本合上動畫
+      } else {
+        showAnswer(book, answerBoxInner, flipButton);
+      }
+    }
+
+    function playShortMelody() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (!audioCtx) {
+        console.warn("Web Audio API not supported in this browser.");
+        return;
+      }
+
+      function tone(freq, delay, duration = 0.2, volume = 0.15) {
+        if (!audioCtx || freq === 0) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.value = freq;
+        osc.type = "square";
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        gain.gain.setValueAtTime(volume, audioCtx.currentTime + delay);
+        gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + delay + duration * 0.9); // 讓音尾稍微快一點結束
+
+        osc.start(audioCtx.currentTime + delay);
+        osc.stop(audioCtx.currentTime + delay + duration);
+      }
+
+      // 音符頻率 - Never Gonna Give You Up (Rickroll!)
+      // 正確的旋律：F4 G4 A#4 G4 D5 D5 C5
+      const F4 = 349.23;   // Fa
+      const G4 = 392.00;   // Sol
+      const As4 = 466.16;  // A# (La#/降Ti)
+      const D5 = 587.33;   // Re'
+      const C5 = 523.25;   // Do'
+
+      // Never Gonna Give You Up 主旋律 - "Never gonna give you up"
+      // F4 G4 A#4 G4 D5 D5 C5 (前四個音快一點，後三個音正常)
+      const melody = [
+        { freq: F4, dur: 0.6 },    // F4 - Ne- (短)
+        { freq: G4, dur: 0.6 },    // G4 - ver (短)
+        { freq: As4, dur: 0.6 },   // A#4 - gon- (短)
+        { freq: G4, dur: 0.6 },    // G4 - na (短)
+        { freq: D5, dur: 1 },      // D5 - give (正常)
+        { freq: D5, dur: 1 },      // D5 - you (正常)
+        { freq: C5, dur: 1.5 }     // C5 - up (稍長)
+      ];
+
+      const baseSingleDuration = 0.30; // 四分音符的基礎時長 (秒) - Rickroll 節奏
+      const shortPauseBetweenNotes = 0.03; // 音符間的微小停頓
+
+      let currentTime = 0;
+      melody.forEach(note => {
+        const notePlayDuration = (note.dur * baseSingleDuration) - shortPauseBetweenNotes;
+        if (note.freq > 0 && notePlayDuration > 0) {
+          tone(note.freq, currentTime, notePlayDuration);
+        }
+        currentTime += (note.dur * baseSingleDuration);
+      });
+    }
+
+    function showAnswer(book, answerBoxInner, flipButton) {
+      const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
+      book.classList.add("opening");
+      isOpen = true;
+
+      book.classList.add("glow");
+      setTimeout(() => book.classList.remove("glow"), 1500);
+
+      if (navigator.vibrate) navigator.vibrate([80, 40, 80, 40, 80]);
+
+      playShortMelody(); // 播放簡短旋律
+
+      setTimeout(() => {
+        book.classList.remove("opening");
+        book.classList.add("opened");
+        answerBoxInner.innerText = "答案：\n\n" + randomAnswer;
+
+        if (!hasOpenedBefore) {
+          hasOpenedBefore = true;
+          flipButton.innerText = "再翻一次";
+        }
+      }, 1000); // 等待書本動畫
+    }
+  </script>
+
+</body>
+
+</html>
