@@ -194,7 +194,62 @@
       box-sizing: border-box;
       overflow-wrap: break-word;
       word-wrap: break-word;
-      line-height: 1.5;
+      line-height: 1.7;
+      font-family: "Noto Serif SC", serif;
+      letter-spacing: 0.05em;
+    }
+
+    /* 🌫️ 神秘翻頁掃光 */
+    @keyframes magicReveal {
+      0% { opacity: 1; transform: translateX(-100%); }
+      40% { opacity: 0.7; }
+      100% { opacity: 0; transform: translateX(120%); }
+    }
+    #answer.revealing {
+      overflow: hidden;
+    }
+    #answer.revealing::before {
+      content: '';
+      position: absolute;
+      top: 5%; left: 0;
+      width: 35%;
+      height: 90%;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255,215,0,0.04) 30%, 
+        rgba(255,215,0,0.08) 50%, 
+        rgba(255,215,0,0.04) 70%, 
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 4;
+      border-radius: 10px;
+      animation: magicReveal 1.8s ease-out forwards;
+    }
+
+    /* 📜 隨機皺紋變化 */
+    /* 皺紋1：預設（不變） */
+    /* 皺紋2：橫向紙纖維 + 左側暗角 */
+    #answer.w2 {
+      background:
+        repeating-linear-gradient(0deg, rgba(50,38,25,0.2) 0px, transparent 1px, transparent 6px) 0 0 / 100% 6px,
+        radial-gradient(ellipse at 30% 50%, transparent 50%, rgba(0,0,0,0.35) 100%),
+        linear-gradient(170deg, #5a4a38 0%, #4a3d30 40%, #3d3227 100%);
+    }
+    /* 皺紋3：粗細交錯紙紋 + 上方暗角 */
+    #answer.w3 {
+      background:
+        repeating-linear-gradient(90deg, rgba(60,48,35,0.12) 0%, transparent 2%, transparent 5%),
+        repeating-linear-gradient(0deg, rgba(40,30,20,0.1) 0px, transparent 1px, transparent 8px),
+        radial-gradient(ellipse at 50% 30%, transparent 45%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(180deg, #5e4d3a 0%, #4a3d30 50%, #3d3227 100%);
+    }
+    /* 皺紋4：斑駁黴點 + 右下暗角 */
+    #answer.w4 {
+      background:
+        radial-gradient(circle 2px, rgba(60,44,28,0.25) 40%, transparent 0%) 0 0 / 8px 8px,
+        radial-gradient(ellipse at 70% 70%, transparent 40%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(160deg, #584733 0%, #4a3d30 50%, #3d3227 100%);
     }
 
     #prompt {
@@ -533,8 +588,20 @@
         book.classList.add("opened");
         answerBoxInner.innerText = "答案：\n\n" + randomAnswer;
 
-        // 隨機裂痕（約 40% 機率）
+        // 🌫️ 神秘掃光
         const answerEl = document.getElementById("answer");
+        answerEl.classList.add("revealing");
+        setTimeout(() => answerEl.classList.remove("revealing"), 2000);
+
+        // 📜 隨機皺紋（每頁不同紙紋）
+        answerEl.classList.remove("w2", "w3", "w4");
+        const wrinkle = Math.random();
+        if (wrinkle < 0.25) { answerEl.classList.add("w2"); }
+        else if (wrinkle < 0.5) { answerEl.classList.add("w3"); }
+        else if (wrinkle < 0.75) { answerEl.classList.add("w4"); }
+        // else: 預設皺紋（什麼都不加）
+
+        // 💥 隨機裂痕（約 40% 機率）
         answerEl.classList.remove("cracked");
         if (Math.random() < 0.4) {
           answerEl.classList.add("cracked");
