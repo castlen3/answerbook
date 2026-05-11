@@ -170,21 +170,16 @@
       z-index: 5;
       border-radius: 10px;
       background:
-        /* 右下角撕裂缺角 */
-        conic-gradient(from 320deg at 92% 90%,
-          transparent 0deg, transparent 15deg,
-          rgba(30,20,10,0.35) 15deg, rgba(30,20,10,0.45) 18deg,
-          rgba(30,20,10,0.25) 20deg, transparent 22deg
+        /* 右下角小缺角 */
+        conic-gradient(from 330deg at 95% 93%,
+          transparent 0deg, transparent 10deg,
+          rgba(30,20,10,0.3) 10deg, rgba(30,20,10,0.4) 12deg,
+          rgba(30,20,10,0.2) 14deg, transparent 16deg
         ),
-        /* 邊緣細裂紋 - 右下 */
-        linear-gradient(145deg,
-          transparent 82%, rgba(30,20,10,0.3) 82.3%,
-          rgba(30,20,10,0.2) 82.6%, transparent 83%
-        ),
-        /* 邊緣細裂紋 - 左下 */
-        linear-gradient(35deg,
-          transparent 88%, rgba(30,20,10,0.2) 88.3%,
-          transparent 88.8%
+        /* 邊緣細紋 - 右下 */
+        linear-gradient(150deg,
+          transparent 88%, rgba(30,20,10,0.2) 88.2%,
+          transparent 88.5%
         );
       mix-blend-mode: multiply;
     }
