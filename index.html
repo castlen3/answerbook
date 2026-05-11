@@ -264,6 +264,85 @@
       }
     }
 
+    /* ✨ 魔法漂浮粒子 */
+    h1 {
+      position: relative;
+      display: inline-block;
+    }
+    .magic-particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      filter: blur(2px);
+    }
+    .magic-particle.p1 {
+      width: 10px; height: 10px;
+      background: rgba(255, 215, 0, 0.7);
+      box-shadow: 0 0 12px 3px rgba(255, 215, 0, 0.4);
+      top: -10px; left: -20px;
+      animation: floatP1 4s ease-in-out infinite;
+    }
+    .magic-particle.p2 {
+      width: 6px; height: 6px;
+      background: rgba(150, 200, 255, 0.6);
+      box-shadow: 0 0 10px 2px rgba(150, 200, 255, 0.3);
+      top: 5px; right: -25px;
+      animation: floatP2 5s ease-in-out infinite 0.5s;
+    }
+    .magic-particle.p3 {
+      width: 8px; height: 8px;
+      background: rgba(200, 150, 255, 0.6);
+      box-shadow: 0 0 10px 2px rgba(200, 150, 255, 0.3);
+      top: -5px; left: 10px;
+      animation: floatP3 4.5s ease-in-out infinite 1s;
+    }
+    .magic-particle.p4 {
+      width: 5px; height: 5px;
+      background: rgba(255, 200, 100, 0.6);
+      box-shadow: 0 0 8px 2px rgba(255, 200, 100, 0.3);
+      top: -15px; right: 5px;
+      animation: floatP4 3.8s ease-in-out infinite 1.5s;
+    }
+    .magic-particle.p5 {
+      width: 7px; height: 7px;
+      background: rgba(180, 230, 200, 0.5);
+      box-shadow: 0 0 10px 2px rgba(180, 230, 200, 0.3);
+      top: 10px; left: -30px;
+      animation: floatP5 5.5s ease-in-out infinite 2s;
+    }
+
+    @keyframes floatP1 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+      20% { opacity: 0.8; }
+      50% { transform: translate(15px, -20px) scale(1.3); opacity: 1; }
+      80% { opacity: 0.6; }
+    }
+    @keyframes floatP2 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+      20% { opacity: 0.7; }
+      50% { transform: translate(-12px, -18px) scale(1.4); opacity: 1; }
+      80% { opacity: 0.5; }
+    }
+    @keyframes floatP3 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+      25% { opacity: 0.8; }
+      50% { transform: translate(20px, -15px) scale(0.7); opacity: 0.6; }
+      75% { transform: translate(-5px, -25px) scale(1.2); opacity: 1; }
+    }
+    @keyframes floatP4 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+      30% { opacity: 0.6; }
+      60% { transform: translate(-18px, -12px) scale(1.5); opacity: 1; }
+      90% { opacity: 0.4; }
+    }
+    @keyframes floatP5 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+      15% { opacity: 0.7; }
+      45% { transform: translate(10px, -22px) scale(1.1); opacity: 1; }
+      75% { transform: translate(20px, -8px) scale(0.8); opacity: 0.5; }
+    }
+
     /* 🖥️ 桌機大螢幕微調 */
     @media (min-width: 1024px) {
       #bookContainer {
@@ -286,7 +365,14 @@
 
 <body>
 
-  <h1 style="font-size: clamp(1.8rem, 6vw, 3.5rem);">📖 答案之書</h1>
+  <h1 style="font-size: clamp(1.8rem, 6vw, 3.5rem);">
+    <span class="magic-particle p1"></span>
+    <span class="magic-particle p2"></span>
+    <span class="magic-particle p3"></span>
+    <span class="magic-particle p4"></span>
+    <span class="magic-particle p5"></span>
+    📖 答案之書
+  </h1>
   <div id="bookContainer">
     <div id="book">
       <span class="corner tl"></span>
