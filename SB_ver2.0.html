@@ -161,7 +161,7 @@
       overflow: auto;
     }
 
-    /* 💥 裂痕效果（隨機出現） */
+    /* 💥 裂痕效果 - 邊緣自然破損（隨機出現） */
     #answer.cracked::after {
       content: '';
       position: absolute;
@@ -170,25 +170,21 @@
       z-index: 5;
       border-radius: 10px;
       background:
-        /* 主裂痕 - 鋸齒閃電 */
-        linear-gradient(78deg,
-          transparent 43.5%, rgba(30,20,10,0.5) 44%,
-          rgba(30,20,10,0.4) 44.3%, transparent 44.8%
+        /* 右下角撕裂缺角 */
+        conic-gradient(from 320deg at 92% 90%,
+          transparent 0deg, transparent 15deg,
+          rgba(30,20,10,0.35) 15deg, rgba(30,20,10,0.45) 18deg,
+          rgba(30,20,10,0.25) 20deg, transparent 22deg
         ),
-        /* 分支裂痕 1 */
-        linear-gradient(115deg,
-          transparent 67.5%, rgba(30,20,10,0.35) 68%,
-          rgba(30,20,10,0.25) 68.3%, transparent 68.8%
+        /* 邊緣細裂紋 - 右下 */
+        linear-gradient(145deg,
+          transparent 82%, rgba(30,20,10,0.3) 82.3%,
+          rgba(30,20,10,0.2) 82.6%, transparent 83%
         ),
-        /* 分支裂痕 2 */
-        linear-gradient(50deg,
-          transparent 28%, rgba(30,20,10,0.3) 28.3%,
-          transparent 28.8%
-        ),
-        /* 裂痕邊緣微亮 */
-        linear-gradient(78deg,
-          transparent 43.8%, rgba(80,60,40,0.2) 44%,
-          transparent 44.2%
+        /* 邊緣細裂紋 - 左下 */
+        linear-gradient(35deg,
+          transparent 88%, rgba(30,20,10,0.2) 88.3%,
+          transparent 88.8%
         );
       mix-blend-mode: multiply;
     }
