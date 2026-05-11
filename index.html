@@ -6,6 +6,10 @@
   <title>答案之書</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     html,
     body {
       margin: 0;
@@ -13,24 +17,25 @@
       height: 100%;
       background-color: #1d1a1a;
       font-family: "微軟正黑體", sans-serif;
-      overflow: hidden;
     }
 
     body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding-top: 3vh;
+      justify-content: center;
+      padding: 3vh 5vw;
       color: #fff;
+      min-height: 100vh;
     }
 
     #bookContainer {
       position: relative;
-      width: 90vw;
-      height: 60vh;
+      width: min(90vw, 650px);
+      height: min(55vh, 420px);
       perspective: 1200px;
       margin-top: 2vh;
+      flex-shrink: 0;
     }
 
     #book {
@@ -41,7 +46,7 @@
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
       color: gold;
-      font-size: 5vw;
+      font-size: clamp(1.5rem, 5vw, 3rem);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -71,7 +76,7 @@
       height: 100%;
       padding: 8% 5%;
       box-sizing: border-box;
-      font-size: 4.5vw;
+      font-size: clamp(1.1rem, 4vw, 2rem);
       color: #000;
       background-color: #f9f4e5;
       display: none;
@@ -96,15 +101,17 @@
     }
 
     #prompt {
-      margin-top: 3vh;
-      font-size: 4vw;
+      margin-top: clamp(1rem, 3vh, 1.5rem);
+      font-size: clamp(0.9rem, 3.5vw, 1.4rem);
       color: #ccc;
+      text-align: center;
+      max-width: 600px;
     }
 
     button {
-      margin-top: 2vh;
-      font-size: 5vw;
-      padding: 10px 30px;
+      margin-top: clamp(1rem, 2vh, 1.5rem);
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      padding: clamp(8px, 1.5vw, 14px) clamp(24px, 4vw, 40px);
       background-color: #fdd835;
       color: #3e2723;
       border: none;
@@ -134,12 +141,30 @@
     #book.glow {
       animation: glow 1.5s ease-out;
     }
+
+    /* 🖥️ 桌機大螢幕微調 */
+    @media (min-width: 1024px) {
+      #bookContainer {
+        width: 650px;
+        height: 420px;
+      }
+    }
+
+    /* 📱 超小螢幕微調 */
+    @media (max-width: 400px) {
+      body {
+        padding: 2vh 3vw;
+      }
+      #bookContainer {
+        height: 45vh;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <h1 style="font-size: 6vw;">📖 答案之書</h1>
+  <h1 style="font-size: clamp(1.8rem, 6vw, 3.5rem);">📖 答案之書</h1>
   <div id="bookContainer">
     <div id="book">答案之書</div>
     <div id="answer">
