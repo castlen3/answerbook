@@ -142,6 +142,31 @@
       animation: glow 1.5s ease-out;
     }
 
+    /* 💕 愛心特效 */
+    .heart {
+      position: fixed;
+      pointer-events: none;
+      font-size: 24px;
+      z-index: 999;
+      animation: heartFloat 3s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes heartFloat {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(0.5) rotate(0deg);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-40vh) scale(1.2) rotate(20deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-80vh) scale(0.8) rotate(-10deg);
+      }
+    }
+
     /* 🖥️ 桌機大螢幕微調 */
     @media (min-width: 1024px) {
       #bookContainer {
@@ -189,6 +214,7 @@
       "擲個硬幣吧，正面就...反面就...", "我覺得你只是想找人聊天。", "這個嘛...很難評。", "下一位！", "此答案已過期，請洽詢客服。",
       "可能需要一點魔法。", "嗶嗶！偵測到問題過於抽象。", "我只是一個網頁，別為難我。", "喝口水，壓壓驚。", "答案售罄，明日請早。",
       "那是肯定的", // 驚喜答案！
+      "爸爸給你一個抱抱", // 愛心特效！
       "你人好好，但答案我不知道。", "去問隔壁老王看看。", "這個問題的複雜度超出了我的薪水。", "我的AI累了，想下班。", "答案被外星人劫走了。",
       "你是不是忘了開勿擾模式？", "這個問題，它...它自己走掉了！", "讓我算一下...嗯...大概是那樣吧。", "佛曰：不可說，不可說。", "要不要試試看反過來問？",
       "今天的風兒有點喧囂。", "答案在鹹酥雞的袋子裡。", "請保持社交距離，謝謝。", "你是不是想騙我唱歌？", "這個問題好無聊，下一個！",
@@ -285,6 +311,22 @@
       });
     }
 
+    function burstHearts() {
+      const emojis = ["❤️", "💕", "💗", "💖", "💝", "🩷", "🥰"];
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        heart.style.left = (Math.random() * 90 + 5) + "%";
+        heart.style.top = (Math.random() * 60 + 20) + "%";
+        heart.style.fontSize = (Math.random() * 20 + 16) + "px";
+        heart.style.animationDelay = (Math.random() * 1.5) + "s";
+        heart.style.animationDuration = (Math.random() * 1.5 + 2.5) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }
+    }
+
     function showAnswer(book, answerBoxInner, flipButton) {
       const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
       book.classList.add("opening");
@@ -301,6 +343,10 @@
         book.classList.remove("opening");
         book.classList.add("opened");
         answerBoxInner.innerText = "答案：\n\n" + randomAnswer;
+
+        if (randomAnswer === "爸爸給你一個抱抱") {
+          burstHearts();
+        }
 
         if (!hasOpenedBefore) {
           hasOpenedBefore = true;
