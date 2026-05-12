@@ -121,7 +121,7 @@
     #book.opened {
       transform: rotateY(-160deg);
       background: linear-gradient(160deg, #4a3d30 0%, #3d3227 50%, #4a3d30 100%);
-      color: #f0e2cb;
+      color: #3b2616;
       border-color: #8a7a60;
     }
     #book.opened::before {
@@ -143,65 +143,65 @@
       padding: 8% 5%;
       box-sizing: border-box;
       font-size: clamp(1.1rem, 4vw, 2rem);
-      color: #f0e2cb;
+      color: #3b2616;
       background:
-        /* 紙張紋理噪點 */
-        repeating-conic-gradient(rgba(82,62,38,0.12) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px,
-        /* 邊緣舊化暗角 */
-        radial-gradient(ellipse at 50% 50%, transparent 58%, rgba(0,0,0,0.24) 100%),
-        /* 基底暗色舊紙 */
-        linear-gradient(170deg, #735f45 0%, #5c4a36 42%, #443626 100%);
+        /* 紙張纖維與泛黃斑點 */
+        radial-gradient(circle at 18% 22%, rgba(104, 63, 22, 0.10) 0 2px, transparent 6px),
+        radial-gradient(circle at 82% 74%, rgba(126, 78, 28, 0.09) 0 3px, transparent 9px),
+        repeating-linear-gradient(2deg, rgba(92, 61, 28, 0.055) 0 1px, transparent 1px 7px),
+        /* 邊緣泛黃舊化 */
+        radial-gradient(ellipse at 50% 50%, transparent 56%, rgba(107, 67, 24, 0.24) 100%),
+        /* 基底米黃色羊皮紙 */
+        linear-gradient(170deg, #ead7a3 0%, #dcc087 44%, #c89b5a 100%);
       display: none;
       z-index: 1;
       border-radius: 10px;
       box-shadow:
-        inset 0 0 60px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(226, 190, 111, 0.34),
-        inset 0 0 0 8px rgba(80, 54, 28, 0.16),
-        inset 0 0 18px rgba(150, 116, 68, 0.18);
+        inset 0 0 56px rgba(94, 55, 16, 0.22),
+        inset 0 0 0 1px rgba(255, 236, 171, 0.45),
+        inset 0 0 0 8px rgba(121, 76, 25, 0.12),
+        inset 0 0 18px rgba(255, 232, 170, 0.22);
       text-align: center;
       overflow: auto;
     }
 
-    /* ✨ 內頁魔法書邊框：細金線、角落符紋，不干擾文字 */
-    #answer .page-ornament {
+    /* ✨ 內頁連續燙金框線：像壓在羊皮紙上的魔法書金箔 */
+    #answer .page-gold-frame {
       position: absolute;
-      width: clamp(30px, 7vw, 52px);
-      height: clamp(30px, 7vw, 52px);
+      inset: clamp(12px, 2.8vw, 22px);
       pointer-events: none;
       z-index: 6;
-      opacity: 0.72;
-      filter: drop-shadow(0 0 5px rgba(218, 174, 91, 0.22));
+      border-radius: 8px;
+      border: 5px double transparent;
+      border-image: linear-gradient(135deg,
+        #8f5e16 0%,
+        #f7dc8c 18%,
+        #b57c23 36%,
+        #fff0ad 52%,
+        #a56b18 72%,
+        #f3cf72 100%
+      ) 1;
+      box-shadow:
+        0 0 9px rgba(159, 103, 28, 0.32),
+        inset 0 0 8px rgba(255, 236, 174, 0.22);
+      opacity: 0.88;
     }
 
-    #answer .page-ornament::before,
-    #answer .page-ornament::after {
+    #answer .page-gold-frame::before,
+    #answer .page-gold-frame::after {
       content: "";
       position: absolute;
-      inset: 0;
-      border-color: rgba(218, 174, 91, 0.62);
-      border-style: double;
+      inset: clamp(7px, 1.4vw, 12px);
+      border-radius: 6px;
+      border: 1px solid rgba(128, 80, 18, 0.52);
+      box-shadow: 0 0 5px rgba(255, 226, 143, 0.24);
     }
 
-    #answer .page-ornament::after {
-      inset: 9px;
-      border-color: rgba(244, 216, 148, 0.28);
-      transform: rotate(45deg) scale(0.46);
-      border-width: 2px;
-      border-radius: 50%;
-    }
-
-    #answer .page-ornament.tl { top: 13px; left: 13px; }
-    #answer .page-ornament.tr { top: 13px; right: 13px; transform: rotate(90deg); }
-    #answer .page-ornament.bl { bottom: 13px; left: 13px; transform: rotate(-90deg); }
-    #answer .page-ornament.br { bottom: 13px; right: 13px; transform: rotate(180deg); }
-
-    #answer .page-ornament.tl::before,
-    #answer .page-ornament.tr::before,
-    #answer .page-ornament.bl::before,
-    #answer .page-ornament.br::before {
-      border-width: 3px 0 0 3px;
-      border-radius: 10px 0 0 0;
+    #answer .page-gold-frame::after {
+      inset: clamp(15px, 2.5vw, 22px);
+      border-color: rgba(255, 235, 165, 0.34);
+      border-style: dashed;
+      opacity: 0.7;
     }
 
     /* 🕯️ 隨機斑駁：只做邊緣小裂痕、污點與紙角磨損，避免像閃電裂紋 */
@@ -323,24 +323,24 @@
     /* 皺紋2：橫向紙纖維 + 左側暗角 */
     #answer.w2 {
       background:
-        repeating-linear-gradient(0deg, rgba(65,47,28,0.14) 0px, transparent 1px, transparent 6px) 0 0 / 100% 6px,
-        radial-gradient(ellipse at 30% 50%, transparent 54%, rgba(0,0,0,0.26) 100%),
-        linear-gradient(170deg, #765f43 0%, #5c4a36 42%, #443626 100%);
+        repeating-linear-gradient(0deg, rgba(111,75,29,0.09) 0px, transparent 1px, transparent 6px) 0 0 / 100% 6px,
+        radial-gradient(ellipse at 30% 50%, transparent 52%, rgba(112,70,24,0.22) 100%),
+        linear-gradient(170deg, #ecd9a5 0%, #d9bb7d 44%, #c39250 100%);
     }
     /* 皺紋3：粗細交錯紙紋 + 上方暗角 */
     #answer.w3 {
       background:
-        repeating-linear-gradient(90deg, rgba(74,56,35,0.10) 0%, transparent 2%, transparent 5%),
-        repeating-linear-gradient(0deg, rgba(50,36,22,0.08) 0px, transparent 1px, transparent 8px),
-        radial-gradient(ellipse at 50% 30%, transparent 48%, rgba(0,0,0,0.23) 100%),
-        linear-gradient(180deg, #786145 0%, #5c4a36 50%, #443626 100%);
+        repeating-linear-gradient(90deg, rgba(124,82,30,0.07) 0%, transparent 2%, transparent 5%),
+        repeating-linear-gradient(0deg, rgba(104,70,28,0.06) 0px, transparent 1px, transparent 8px),
+        radial-gradient(ellipse at 50% 30%, transparent 50%, rgba(114,70,22,0.20) 100%),
+        linear-gradient(180deg, #efdda9 0%, #d9bc80 52%, #c79a57 100%);
     }
     /* 皺紋4：斑駁黴點 + 右下暗角 */
     #answer.w4 {
       background:
-        radial-gradient(circle 2px, rgba(70,48,25,0.18) 40%, transparent 0%) 0 0 / 8px 8px,
-        radial-gradient(ellipse at 70% 70%, transparent 44%, rgba(0,0,0,0.23) 100%),
-        linear-gradient(160deg, #725a3e 0%, #5c4934 50%, #443626 100%);
+        radial-gradient(circle 2px, rgba(124,76,24,0.12) 40%, transparent 0%) 0 0 / 8px 8px,
+        radial-gradient(ellipse at 70% 70%, transparent 46%, rgba(119,72,21,0.20) 100%),
+        linear-gradient(160deg, #ead5a0 0%, #d8b774 50%, #c39250 100%);
     }
 
     #prompt {
@@ -528,10 +528,7 @@
       答案之書
     </div>
     <div id="answer">
-      <span class="page-ornament tl"></span>
-      <span class="page-ornament tr"></span>
-      <span class="page-ornament bl"></span>
-      <span class="page-ornament br"></span>
+      <span class="page-gold-frame"></span>
       <div></div>
     </div>
   </div>
