@@ -121,7 +121,7 @@
     #book.opened {
       transform: rotateY(-160deg);
       background: linear-gradient(160deg, #4a3d30 0%, #3d3227 50%, #4a3d30 100%);
-      color: #e8dcc8;
+      color: #f0e2cb;
       border-color: #8a7a60;
     }
     #book.opened::before {
@@ -143,22 +143,65 @@
       padding: 8% 5%;
       box-sizing: border-box;
       font-size: clamp(1.1rem, 4vw, 2rem);
-      color: #e8dcc8;
+      color: #f0e2cb;
       background:
         /* 紙張紋理噪點 */
-        repeating-conic-gradient(rgba(60,48,35,0.15) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px,
+        repeating-conic-gradient(rgba(82,62,38,0.12) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px,
         /* 邊緣舊化暗角 */
-        radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,0.3) 100%),
+        radial-gradient(ellipse at 50% 50%, transparent 58%, rgba(0,0,0,0.24) 100%),
         /* 基底暗色舊紙 */
-        linear-gradient(170deg, #5a4a38 0%, #4a3d30 40%, #3d3227 100%);
+        linear-gradient(170deg, #735f45 0%, #5c4a36 42%, #443626 100%);
       display: none;
       z-index: 1;
       border-radius: 10px;
       box-shadow:
-        inset 0 0 60px rgba(0, 0, 0, 0.3),
-        inset 0 0 15px rgba(100, 80, 50, 0.15);
+        inset 0 0 60px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(226, 190, 111, 0.34),
+        inset 0 0 0 8px rgba(80, 54, 28, 0.16),
+        inset 0 0 18px rgba(150, 116, 68, 0.18);
       text-align: center;
       overflow: auto;
+    }
+
+    /* ✨ 內頁魔法書邊框：細金線、角落符紋，不干擾文字 */
+    #answer .page-ornament {
+      position: absolute;
+      width: clamp(30px, 7vw, 52px);
+      height: clamp(30px, 7vw, 52px);
+      pointer-events: none;
+      z-index: 6;
+      opacity: 0.72;
+      filter: drop-shadow(0 0 5px rgba(218, 174, 91, 0.22));
+    }
+
+    #answer .page-ornament::before,
+    #answer .page-ornament::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-color: rgba(218, 174, 91, 0.62);
+      border-style: double;
+    }
+
+    #answer .page-ornament::after {
+      inset: 9px;
+      border-color: rgba(244, 216, 148, 0.28);
+      transform: rotate(45deg) scale(0.46);
+      border-width: 2px;
+      border-radius: 50%;
+    }
+
+    #answer .page-ornament.tl { top: 13px; left: 13px; }
+    #answer .page-ornament.tr { top: 13px; right: 13px; transform: rotate(90deg); }
+    #answer .page-ornament.bl { bottom: 13px; left: 13px; transform: rotate(-90deg); }
+    #answer .page-ornament.br { bottom: 13px; right: 13px; transform: rotate(180deg); }
+
+    #answer .page-ornament.tl::before,
+    #answer .page-ornament.tr::before,
+    #answer .page-ornament.bl::before,
+    #answer .page-ornament.br::before {
+      border-width: 3px 0 0 3px;
+      border-radius: 10px 0 0 0;
     }
 
     /* 🕯️ 隨機斑駁：只做邊緣小裂痕、污點與紙角磨損，避免像閃電裂紋 */
@@ -235,6 +278,8 @@
     }
 
     #answer>div {
+      position: relative;
+      z-index: 2;
       width: 100%;
       padding: 5%;
       box-sizing: border-box;
@@ -278,24 +323,24 @@
     /* 皺紋2：橫向紙纖維 + 左側暗角 */
     #answer.w2 {
       background:
-        repeating-linear-gradient(0deg, rgba(50,38,25,0.2) 0px, transparent 1px, transparent 6px) 0 0 / 100% 6px,
-        radial-gradient(ellipse at 30% 50%, transparent 50%, rgba(0,0,0,0.35) 100%),
-        linear-gradient(170deg, #5a4a38 0%, #4a3d30 40%, #3d3227 100%);
+        repeating-linear-gradient(0deg, rgba(65,47,28,0.14) 0px, transparent 1px, transparent 6px) 0 0 / 100% 6px,
+        radial-gradient(ellipse at 30% 50%, transparent 54%, rgba(0,0,0,0.26) 100%),
+        linear-gradient(170deg, #765f43 0%, #5c4a36 42%, #443626 100%);
     }
     /* 皺紋3：粗細交錯紙紋 + 上方暗角 */
     #answer.w3 {
       background:
-        repeating-linear-gradient(90deg, rgba(60,48,35,0.12) 0%, transparent 2%, transparent 5%),
-        repeating-linear-gradient(0deg, rgba(40,30,20,0.1) 0px, transparent 1px, transparent 8px),
-        radial-gradient(ellipse at 50% 30%, transparent 45%, rgba(0,0,0,0.3) 100%),
-        linear-gradient(180deg, #5e4d3a 0%, #4a3d30 50%, #3d3227 100%);
+        repeating-linear-gradient(90deg, rgba(74,56,35,0.10) 0%, transparent 2%, transparent 5%),
+        repeating-linear-gradient(0deg, rgba(50,36,22,0.08) 0px, transparent 1px, transparent 8px),
+        radial-gradient(ellipse at 50% 30%, transparent 48%, rgba(0,0,0,0.23) 100%),
+        linear-gradient(180deg, #786145 0%, #5c4a36 50%, #443626 100%);
     }
     /* 皺紋4：斑駁黴點 + 右下暗角 */
     #answer.w4 {
       background:
-        radial-gradient(circle 2px, rgba(60,44,28,0.25) 40%, transparent 0%) 0 0 / 8px 8px,
-        radial-gradient(ellipse at 70% 70%, transparent 40%, rgba(0,0,0,0.3) 100%),
-        linear-gradient(160deg, #584733 0%, #4a3d30 50%, #3d3227 100%);
+        radial-gradient(circle 2px, rgba(70,48,25,0.18) 40%, transparent 0%) 0 0 / 8px 8px,
+        radial-gradient(ellipse at 70% 70%, transparent 44%, rgba(0,0,0,0.23) 100%),
+        linear-gradient(160deg, #725a3e 0%, #5c4934 50%, #443626 100%);
     }
 
     #prompt {
@@ -483,6 +528,10 @@
       答案之書
     </div>
     <div id="answer">
+      <span class="page-ornament tl"></span>
+      <span class="page-ornament tr"></span>
+      <span class="page-ornament bl"></span>
+      <span class="page-ornament br"></span>
       <div></div>
     </div>
   </div>
