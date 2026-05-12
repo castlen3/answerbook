@@ -121,7 +121,7 @@
     #book.opened {
       transform: rotateY(-160deg);
       background: linear-gradient(160deg, #4a3d30 0%, #3d3227 50%, #4a3d30 100%);
-      color: #3b2616;
+      color: #2f2418;
       border-color: #8a7a60;
     }
     #book.opened::before {
@@ -143,68 +143,23 @@
       padding: 8% 5%;
       box-sizing: border-box;
       font-size: clamp(1.1rem, 4vw, 2rem);
-      color: #3b2616;
+      color: #2f2418;
       background:
-        /* 紙張纖維與泛黃斑點 */
-        radial-gradient(circle at 18% 22%, rgba(104, 63, 22, 0.10) 0 2px, transparent 6px),
-        radial-gradient(circle at 82% 74%, rgba(126, 78, 28, 0.09) 0 3px, transparent 9px),
-        repeating-linear-gradient(2deg, rgba(92, 61, 28, 0.055) 0 1px, transparent 1px 7px),
-        /* 邊緣泛黃舊化 */
-        radial-gradient(ellipse at 50% 50%, transparent 56%, rgba(107, 67, 24, 0.24) 100%),
-        /* 基底米黃色羊皮紙 */
-        linear-gradient(170deg, #ead7a3 0%, #dcc087 44%, #c89b5a 100%);
+        /* 乾淨白底，只有非常淡的泛黃與舊書邊緣陰影，不做線條/點點 */
+        radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.55) 0%, transparent 58%),
+        radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(185, 139, 64, 0.18) 100%),
+        linear-gradient(170deg, #fffaf0 0%, #f7eedc 48%, #ead6ad 100%);
       display: none;
       z-index: 1;
       border-radius: 10px;
       box-shadow:
-        inset 0 0 56px rgba(94, 55, 16, 0.22),
-        inset 0 0 0 1px rgba(255, 236, 171, 0.45),
-        inset 0 0 0 8px rgba(121, 76, 25, 0.12),
-        inset 0 0 18px rgba(255, 232, 170, 0.22);
+        inset 0 0 52px rgba(145, 103, 39, 0.16),
+        inset 0 0 18px rgba(255, 255, 255, 0.34);
       text-align: center;
       overflow: auto;
     }
 
-    /* ✨ 內頁連續燙金框線：像壓在羊皮紙上的魔法書金箔 */
-    #answer .page-gold-frame {
-      position: absolute;
-      inset: clamp(12px, 2.8vw, 22px);
-      pointer-events: none;
-      z-index: 6;
-      border-radius: 8px;
-      border: 5px double transparent;
-      border-image: linear-gradient(135deg,
-        #8f5e16 0%,
-        #f7dc8c 18%,
-        #b57c23 36%,
-        #fff0ad 52%,
-        #a56b18 72%,
-        #f3cf72 100%
-      ) 1;
-      box-shadow:
-        0 0 9px rgba(159, 103, 28, 0.32),
-        inset 0 0 8px rgba(255, 236, 174, 0.22);
-      opacity: 0.88;
-    }
-
-    #answer .page-gold-frame::before,
-    #answer .page-gold-frame::after {
-      content: "";
-      position: absolute;
-      inset: clamp(7px, 1.4vw, 12px);
-      border-radius: 6px;
-      border: 1px solid rgba(128, 80, 18, 0.52);
-      box-shadow: 0 0 5px rgba(255, 226, 143, 0.24);
-    }
-
-    #answer .page-gold-frame::after {
-      inset: clamp(15px, 2.5vw, 22px);
-      border-color: rgba(255, 235, 165, 0.34);
-      border-style: dashed;
-      opacity: 0.7;
-    }
-
-    /* 🕯️ 隨機斑駁：只做邊緣小裂痕、污點與紙角磨損，避免像閃電裂紋 */
+    /* 🕯️ 白色古書內頁：避免像筆記本的線條/點點，只保留柔和邊緣泛黃 */
     #answer.weathered::after {
       content: '';
       position: absolute;
@@ -213,64 +168,20 @@
       z-index: 5;
       border-radius: 10px;
       background:
-        /* 細小污點：JS 會每次翻頁改位置與透明度 */
-        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
-        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
-        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
-        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 54%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
-        /* 四邊很淡的破舊暗影 */
-        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
-        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
+        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 54%), rgba(137, 91, 33, var(--smudge-o, 0.10)) 0 10px, transparent 34px),
+        linear-gradient(90deg, rgba(153, 104, 40, 0.10), transparent 12%, transparent 88%, rgba(153, 104, 40, 0.10)),
+        linear-gradient(0deg, rgba(153, 104, 40, 0.10), transparent 12%, transparent 88%, rgba(153, 104, 40, 0.08));
       mix-blend-mode: multiply;
-      opacity: 0.95;
+      opacity: 0.78;
     }
 
-    #answer.weathered.wear-se::after {
-      background:
-        conic-gradient(from var(--chip-from, 326deg) at var(--chip-x, 96%) var(--chip-y, 94%),
-          transparent 0deg, transparent 9deg,
-          rgba(28,18,9,0.28) 9deg, rgba(28,18,9,0.38) 11deg,
-          rgba(28,18,9,0.16) 14deg, transparent 16deg
-        ),
-        linear-gradient(var(--crack-angle, 142deg), transparent 90.5%, rgba(24,14,7,0.22) 90.75%, transparent 91.15%),
-        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
-        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
-        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
-        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 54%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
-        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
-        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
-    }
-
-    #answer.weathered.wear-nw::after {
-      background:
-        conic-gradient(from var(--chip-from, 145deg) at var(--chip-x, 4%) var(--chip-y, 7%),
-          transparent 0deg, transparent 8deg,
-          rgba(28,18,9,0.24) 8deg, rgba(28,18,9,0.34) 10deg,
-          rgba(28,18,9,0.14) 13deg, transparent 15deg
-        ),
-        linear-gradient(var(--crack-angle, 35deg), transparent 7.8%, rgba(24,14,7,0.18) 8.05%, transparent 8.5%),
-        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
-        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
-        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
-        radial-gradient(ellipse at var(--smudge-x, 4%) var(--smudge-y, 48%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
-        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
-        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
-    }
-
+    #answer.weathered.wear-se::after,
+    #answer.weathered.wear-nw::after,
     #answer.weathered.wear-ne::after {
       background:
-        conic-gradient(from var(--chip-from, 225deg) at var(--chip-x, 96%) var(--chip-y, 7%),
-          transparent 0deg, transparent 8deg,
-          rgba(28,18,9,0.22) 8deg, rgba(28,18,9,0.32) 10deg,
-          rgba(28,18,9,0.13) 12deg, transparent 15deg
-        ),
-        linear-gradient(var(--crack-angle, 128deg), transparent 8.8%, rgba(24,14,7,0.18) 9.05%, transparent 9.45%),
-        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
-        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
-        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
-        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 42%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
-        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
-        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
+        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 54%), rgba(137, 91, 33, var(--smudge-o, 0.10)) 0 10px, transparent 34px),
+        linear-gradient(90deg, rgba(153, 104, 40, 0.10), transparent 12%, transparent 88%, rgba(153, 104, 40, 0.10)),
+        linear-gradient(0deg, rgba(153, 104, 40, 0.10), transparent 12%, transparent 88%, rgba(153, 104, 40, 0.08));
     }
 
     #book.opened+#answer {
@@ -318,29 +229,25 @@
       animation: magicReveal 1.8s ease-out forwards;
     }
 
-    /* 📜 隨機皺紋變化 */
-    /* 皺紋1：預設（不變） */
-    /* 皺紋2：橫向紙纖維 + 左側暗角 */
+    /* 📜 隨機紙色變化：只變泛黃位置，不加線條或點點 */
+    /* 變化1：預設白色舊紙 */
     #answer.w2 {
       background:
-        repeating-linear-gradient(0deg, rgba(111,75,29,0.09) 0px, transparent 1px, transparent 6px) 0 0 / 100% 6px,
-        radial-gradient(ellipse at 30% 50%, transparent 52%, rgba(112,70,24,0.22) 100%),
-        linear-gradient(170deg, #ecd9a5 0%, #d9bb7d 44%, #c39250 100%);
+        radial-gradient(ellipse at 35% 45%, rgba(255,255,255,0.52) 0%, transparent 58%),
+        radial-gradient(ellipse at 35% 50%, transparent 60%, rgba(174, 124, 48, 0.16) 100%),
+        linear-gradient(170deg, #fffbf1 0%, #f6ecd8 50%, #ead4a9 100%);
     }
-    /* 皺紋3：粗細交錯紙紋 + 上方暗角 */
     #answer.w3 {
       background:
-        repeating-linear-gradient(90deg, rgba(124,82,30,0.07) 0%, transparent 2%, transparent 5%),
-        repeating-linear-gradient(0deg, rgba(104,70,28,0.06) 0px, transparent 1px, transparent 8px),
-        radial-gradient(ellipse at 50% 30%, transparent 50%, rgba(114,70,22,0.20) 100%),
-        linear-gradient(180deg, #efdda9 0%, #d9bc80 52%, #c79a57 100%);
+        radial-gradient(ellipse at 50% 28%, rgba(255,255,255,0.50) 0%, transparent 56%),
+        radial-gradient(ellipse at 50% 30%, transparent 62%, rgba(167, 116, 42, 0.15) 100%),
+        linear-gradient(180deg, #fffdf6 0%, #f4ead6 54%, #e8d1a4 100%);
     }
-    /* 皺紋4：斑駁黴點 + 右下暗角 */
     #answer.w4 {
       background:
-        radial-gradient(circle 2px, rgba(124,76,24,0.12) 40%, transparent 0%) 0 0 / 8px 8px,
-        radial-gradient(ellipse at 70% 70%, transparent 46%, rgba(119,72,21,0.20) 100%),
-        linear-gradient(160deg, #ead5a0 0%, #d8b774 50%, #c39250 100%);
+        radial-gradient(ellipse at 72% 70%, rgba(255,255,255,0.48) 0%, transparent 58%),
+        radial-gradient(ellipse at 70% 70%, transparent 62%, rgba(174, 121, 43, 0.16) 100%),
+        linear-gradient(160deg, #fffaf0 0%, #f3e7d0 50%, #e7cfa1 100%);
     }
 
     #prompt {
@@ -528,7 +435,6 @@
       答案之書
     </div>
     <div id="answer">
-      <span class="page-gold-frame"></span>
       <div></div>
     </div>
   </div>
@@ -674,31 +580,18 @@
     function applyPageWeathering(answerEl) {
       answerEl.classList.remove("weathered", "wear-se", "wear-nw", "wear-ne");
 
-      // 斑駁永遠存在但很淡；位置集中在邊緣，避免蓋住答案文字。
-      setPercentVar(answerEl, "--stain-a-x", 4, 18);
-      setPercentVar(answerEl, "--stain-a-y", 10, 88);
-      setPercentVar(answerEl, "--stain-b-x", 82, 97);
-      setPercentVar(answerEl, "--stain-b-y", 8, 90);
-      setPercentVar(answerEl, "--stain-c-x", 18, 86);
+      // 白色古書頁只保留柔和邊緣泛黃，不產生筆記本感的線條/點點。
       if (Math.random() < 0.5) {
-        setPercentVar(answerEl, "--stain-c-y", 4, 14);
+        setPercentVar(answerEl, "--smudge-x", 1, 8);
       } else {
-        setPercentVar(answerEl, "--stain-c-y", 86, 97);
+        setPercentVar(answerEl, "--smudge-x", 92, 99);
       }
-      if (Math.random() < 0.5) {
-        setPercentVar(answerEl, "--smudge-x", 2, 8);
-      } else {
-        setPercentVar(answerEl, "--smudge-x", 92, 98);
-      }
-      setPercentVar(answerEl, "--smudge-y", 18, 82);
-      answerEl.style.setProperty("--stain-a-o", randomRange(0.10, 0.20).toFixed(2));
-      answerEl.style.setProperty("--stain-b-o", randomRange(0.08, 0.17).toFixed(2));
-      answerEl.style.setProperty("--stain-c-o", randomRange(0.07, 0.15).toFixed(2));
-      answerEl.style.setProperty("--smudge-o", randomRange(0.10, 0.18).toFixed(2));
+      setPercentVar(answerEl, "--smudge-y", 16, 84);
+      answerEl.style.setProperty("--smudge-o", randomRange(0.06, 0.12).toFixed(2));
 
-      // 55% 機率才有邊角小裂痕；其餘只有自然污點與邊緣舊化。
+      // 低機率加極淡邊角舊化；不畫可見裂線。
       const wearRoll = Math.random();
-      if (wearRoll < 0.55) {
+      if (wearRoll < 0.25) {
         const variants = ["wear-se", "wear-nw", "wear-ne"];
         const variant = variants[Math.floor(Math.random() * variants.length)];
         answerEl.classList.add(variant);
