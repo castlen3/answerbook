@@ -427,11 +427,17 @@
       75% { transform: translate(20px, -8px) scale(0.8); opacity: 0.5; }
     }
 
-    /* 🖥️ 桌機大螢幕微調 */
+    /* 🖥️ 桌機大螢幕微調：只調內頁答案文字，整體版面維持原本配置 */
     @media (min-width: 1024px) {
       #bookContainer {
         width: 650px;
         height: 420px;
+      }
+      #answer {
+        padding-top: clamp(42px, 7vh, 56px);
+      }
+      #answer>div {
+        padding-top: 1.5%;
       }
     }
 
