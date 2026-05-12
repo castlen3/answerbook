@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@400;600;700&family=Iansui&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -19,7 +19,7 @@
       padding: 0;
       height: 100%;
       background-color: #1d1a1a;
-      font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+      font-family: "Iansui", "Noto Serif TC", "Songti TC", "PMingLiU", serif;
     }
 
     body {
@@ -53,7 +53,7 @@
         inset 0 0 30px rgba(201, 168, 76, 0.08);
       color: transparent;
       font-size: clamp(1.5rem, 5vw, 3rem);
-      font-family: "Noto Serif SC", "Cinzel Decorative", serif;
+      font-family: "Iansui", "Noto Serif TC", "Cinzel Decorative", "Songti TC", serif;
       letter-spacing: 0.08em;
       display: flex;
       align-items: center;
@@ -161,8 +161,8 @@
       overflow: auto;
     }
 
-    /* 💥 裂痕效果 - 邊緣自然破損（隨機出現） */
-    #answer.cracked::after {
+    /* 🕯️ 隨機斑駁：只做邊緣小裂痕、污點與紙角磨損，避免像閃電裂紋 */
+    #answer.weathered::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -170,18 +170,64 @@
       z-index: 5;
       border-radius: 10px;
       background:
-        /* 右下角小缺角 */
-        conic-gradient(from 330deg at 95% 93%,
-          transparent 0deg, transparent 10deg,
-          rgba(30,20,10,0.3) 10deg, rgba(30,20,10,0.4) 12deg,
-          rgba(30,20,10,0.2) 14deg, transparent 16deg
-        ),
-        /* 邊緣細紋 - 右下 */
-        linear-gradient(150deg,
-          transparent 88%, rgba(30,20,10,0.2) 88.2%,
-          transparent 88.5%
-        );
+        /* 細小污點：JS 會每次翻頁改位置與透明度 */
+        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
+        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
+        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
+        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 54%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
+        /* 四邊很淡的破舊暗影 */
+        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
+        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
       mix-blend-mode: multiply;
+      opacity: 0.95;
+    }
+
+    #answer.weathered.wear-se::after {
+      background:
+        conic-gradient(from var(--chip-from, 326deg) at var(--chip-x, 96%) var(--chip-y, 94%),
+          transparent 0deg, transparent 9deg,
+          rgba(28,18,9,0.28) 9deg, rgba(28,18,9,0.38) 11deg,
+          rgba(28,18,9,0.16) 14deg, transparent 16deg
+        ),
+        linear-gradient(var(--crack-angle, 142deg), transparent 90.5%, rgba(24,14,7,0.22) 90.75%, transparent 91.15%),
+        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
+        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
+        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
+        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 54%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
+        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
+        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
+    }
+
+    #answer.weathered.wear-nw::after {
+      background:
+        conic-gradient(from var(--chip-from, 145deg) at var(--chip-x, 4%) var(--chip-y, 7%),
+          transparent 0deg, transparent 8deg,
+          rgba(28,18,9,0.24) 8deg, rgba(28,18,9,0.34) 10deg,
+          rgba(28,18,9,0.14) 13deg, transparent 15deg
+        ),
+        linear-gradient(var(--crack-angle, 35deg), transparent 7.8%, rgba(24,14,7,0.18) 8.05%, transparent 8.5%),
+        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
+        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
+        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
+        radial-gradient(ellipse at var(--smudge-x, 4%) var(--smudge-y, 48%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
+        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
+        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
+    }
+
+    #answer.weathered.wear-ne::after {
+      background:
+        conic-gradient(from var(--chip-from, 225deg) at var(--chip-x, 96%) var(--chip-y, 7%),
+          transparent 0deg, transparent 8deg,
+          rgba(28,18,9,0.22) 8deg, rgba(28,18,9,0.32) 10deg,
+          rgba(28,18,9,0.13) 12deg, transparent 15deg
+        ),
+        linear-gradient(var(--crack-angle, 128deg), transparent 8.8%, rgba(24,14,7,0.18) 9.05%, transparent 9.45%),
+        radial-gradient(circle at var(--stain-a-x, 14%) var(--stain-a-y, 18%), rgba(24,16,9,var(--stain-a-o,0.16)) 0 1.4px, transparent 2.8px),
+        radial-gradient(circle at var(--stain-b-x, 83%) var(--stain-b-y, 22%), rgba(24,16,9,var(--stain-b-o,0.12)) 0 2px, transparent 4.2px),
+        radial-gradient(circle at var(--stain-c-x, 74%) var(--stain-c-y, 84%), rgba(74,48,25,var(--stain-c-o,0.12)) 0 1.8px, transparent 4.6px),
+        radial-gradient(ellipse at var(--smudge-x, 96%) var(--smudge-y, 42%), rgba(20,12,6,var(--smudge-o,0.16)) 0 7px, transparent 18px),
+        linear-gradient(90deg, rgba(15,9,4,0.18), transparent 7%, transparent 93%, rgba(15,9,4,0.16)),
+        linear-gradient(0deg, rgba(15,9,4,0.16), transparent 8%, transparent 92%, rgba(15,9,4,0.12));
     }
 
     #book.opened+#answer {
@@ -195,7 +241,7 @@
       overflow-wrap: break-word;
       word-wrap: break-word;
       line-height: 1.7;
-      font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+      font-family: "Iansui", "Noto Serif TC", "Songti TC", "PMingLiU", serif;
       letter-spacing: 0.05em;
     }
 
@@ -571,6 +617,67 @@
       }
     }
 
+    function randomRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function setPercentVar(el, name, min, max) {
+      el.style.setProperty(name, randomRange(min, max).toFixed(1) + "%");
+    }
+
+    function applyPageWeathering(answerEl) {
+      answerEl.classList.remove("weathered", "wear-se", "wear-nw", "wear-ne");
+
+      // 斑駁永遠存在但很淡；位置集中在邊緣，避免蓋住答案文字。
+      setPercentVar(answerEl, "--stain-a-x", 4, 18);
+      setPercentVar(answerEl, "--stain-a-y", 10, 88);
+      setPercentVar(answerEl, "--stain-b-x", 82, 97);
+      setPercentVar(answerEl, "--stain-b-y", 8, 90);
+      setPercentVar(answerEl, "--stain-c-x", 18, 86);
+      if (Math.random() < 0.5) {
+        setPercentVar(answerEl, "--stain-c-y", 4, 14);
+      } else {
+        setPercentVar(answerEl, "--stain-c-y", 86, 97);
+      }
+      if (Math.random() < 0.5) {
+        setPercentVar(answerEl, "--smudge-x", 2, 8);
+      } else {
+        setPercentVar(answerEl, "--smudge-x", 92, 98);
+      }
+      setPercentVar(answerEl, "--smudge-y", 18, 82);
+      answerEl.style.setProperty("--stain-a-o", randomRange(0.10, 0.20).toFixed(2));
+      answerEl.style.setProperty("--stain-b-o", randomRange(0.08, 0.17).toFixed(2));
+      answerEl.style.setProperty("--stain-c-o", randomRange(0.07, 0.15).toFixed(2));
+      answerEl.style.setProperty("--smudge-o", randomRange(0.10, 0.18).toFixed(2));
+
+      // 55% 機率才有邊角小裂痕；其餘只有自然污點與邊緣舊化。
+      const wearRoll = Math.random();
+      if (wearRoll < 0.55) {
+        const variants = ["wear-se", "wear-nw", "wear-ne"];
+        const variant = variants[Math.floor(Math.random() * variants.length)];
+        answerEl.classList.add(variant);
+
+        if (variant === "wear-se") {
+          setPercentVar(answerEl, "--chip-x", 94.5, 98);
+          setPercentVar(answerEl, "--chip-y", 91.5, 97);
+          answerEl.style.setProperty("--chip-from", randomRange(318, 340).toFixed(0) + "deg");
+          answerEl.style.setProperty("--crack-angle", randomRange(136, 154).toFixed(0) + "deg");
+        } else if (variant === "wear-nw") {
+          setPercentVar(answerEl, "--chip-x", 2, 6);
+          setPercentVar(answerEl, "--chip-y", 3, 9);
+          answerEl.style.setProperty("--chip-from", randomRange(132, 154).toFixed(0) + "deg");
+          answerEl.style.setProperty("--crack-angle", randomRange(28, 45).toFixed(0) + "deg");
+        } else {
+          setPercentVar(answerEl, "--chip-x", 94, 98);
+          setPercentVar(answerEl, "--chip-y", 3, 9);
+          answerEl.style.setProperty("--chip-from", randomRange(214, 236).toFixed(0) + "deg");
+          answerEl.style.setProperty("--crack-angle", randomRange(118, 136).toFixed(0) + "deg");
+        }
+      }
+
+      answerEl.classList.add("weathered");
+    }
+
     function showAnswer(book, answerBoxInner, flipButton) {
       const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
       book.classList.add("opening");
@@ -601,11 +708,8 @@
         else if (wrinkle < 0.75) { answerEl.classList.add("w4"); }
         // else: 預設皺紋（什麼都不加）
 
-        // 💥 隨機裂痕（約 40% 機率）
-        answerEl.classList.remove("cracked");
-        if (Math.random() < 0.4) {
-          answerEl.classList.add("cracked");
-        }
+        // 🕯️ 隨機邊緣斑駁、小裂痕、小污點（每次翻頁都不同，裂痕不是固定出現）
+        applyPageWeathering(answerEl);
 
         if (randomAnswer === "爸爸給你一個抱抱") {
           burstHearts();
