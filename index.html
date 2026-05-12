@@ -140,9 +140,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      padding: 8% 5%;
+      padding: clamp(48px, 9vw, 78px) clamp(28px, 7vw, 58px);
       box-sizing: border-box;
-      font-size: clamp(1.1rem, 4vw, 2rem);
+      font-size: clamp(1.35rem, 5vw, 2.45rem);
       color: #2f2418;
       background:
         /* 乾淨白底，只有非常淡的泛黃與舊書邊緣陰影，不做線條/點點 */
@@ -157,6 +157,37 @@
         inset 0 0 18px rgba(255, 255, 255, 0.34);
       text-align: center;
       overflow: auto;
+    }
+
+    /* ✨ 內頁魔法書邊框：保留古書儀式感，但不做筆記本線條 */
+    #answer .page-gold-frame {
+      position: absolute;
+      inset: clamp(12px, 3vw, 24px);
+      pointer-events: none;
+      z-index: 6;
+      border-radius: 10px;
+      border: 4px double transparent;
+      border-image: linear-gradient(135deg,
+        #8a5a15 0%,
+        #f0d37b 20%,
+        #b77c21 40%,
+        #fff1b4 56%,
+        #9a6418 76%,
+        #e1ba5f 100%
+      ) 1;
+      box-shadow:
+        0 0 7px rgba(156, 101, 27, 0.24),
+        inset 0 0 6px rgba(255, 239, 182, 0.18);
+      opacity: 0.82;
+    }
+
+    #answer .page-gold-frame::before {
+      content: "";
+      position: absolute;
+      inset: clamp(8px, 1.7vw, 13px);
+      border-radius: 7px;
+      border: 1px solid rgba(130, 82, 20, 0.36);
+      box-shadow: 0 0 4px rgba(255, 229, 150, 0.18);
     }
 
     /* 🕯️ 白色古書內頁：避免像筆記本的線條/點點，只保留柔和邊緣泛黃 */
@@ -196,9 +227,9 @@
       box-sizing: border-box;
       overflow-wrap: break-word;
       word-wrap: break-word;
-      line-height: 1.7;
+      line-height: 1.55;
       font-family: "Iansui", "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.045em;
     }
 
     /* 🌫️ 神秘翻頁掃光 */
@@ -435,6 +466,7 @@
       答案之書
     </div>
     <div id="answer">
+      <span class="page-gold-frame"></span>
       <div></div>
     </div>
   </div>
